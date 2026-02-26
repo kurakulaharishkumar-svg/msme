@@ -1,0 +1,222 @@
+[
+  {
+    "id": "pm-mudra",
+    "name": "Pradhan Mantri Mudra Yojana",
+    "description": "Funding for non-corporate, non-farm small/micro enterprises with loans up to 10 Lakhs.",
+    "tags": ["loan", "micro", "funding"],
+    "category": "Loans",
+    "benefits": ["Collateral free loans", "Low interest rates", "No processing fee for Shishu loans"],
+    "eligibility": ["Non-corporate small business segment (NCSB)", "Micro enterprises in both manufacturing and service sectors"],
+    "target": "Small entrepreneurs, startup founders, shopkeepers",
+    "max_amount": "₹10,00,000"
+  },
+  {
+    "id": "cgtmse",
+    "name": "CGTMSE",
+    "description": "Credit Guarantee Fund Trust for Micro and Small Enterprises providing collateral-free credit.",
+    "tags": ["loan", "guarantee", "collateral-free"],
+    "category": "Loans",
+    "benefits": ["Guarantee cover up to 85%", "Credit up to ₹5 Crore", "Improved access to formal credit"],
+    "eligibility": ["New and existing Micro and Small Enterprises", "No collateral required"],
+    "target": "Manufacturing and services MSEs",
+    "max_amount": "₹5,00,00,000"
+  },
+  {
+    "id": "stand-up-india",
+    "name": "Stand Up India",
+    "description": "Facilitating bank loans between 10 lakh and 1 Crore to at least one SC/ST borrower and one woman borrower per bank branch.",
+    "tags": ["loan", "women", "sc-st"],
+    "category": "Loans",
+    "benefits": ["Financial inclusion", "Support for greenfield enterprises", "Handholding support"],
+    "eligibility": ["SC/ST and/or women entrepreneurs", "Above 18 years of age", "Only for greenfield projects"],
+    "target": "Women and SC/ST entrepreneurs",
+    "max_amount": "₹1,00,00,000"
+  },
+  {
+    "id": "pmegp",
+    "name": "PMEGP",
+    "description": "Prime Minister's Employment Generation Programme for generating self-employment opportunities.",
+    "tags": ["subsidy", "employment", "manufacturing"],
+    "category": "Subsidies",
+    "benefits": ["Subsidy up to 35% of project cost", "Bank-financed projects", "Margin money support"],
+    "eligibility": ["Individuals above 18 years", "At least 8th standard pass for higher project costs"],
+    "target": "Unemployed youth, rural and urban artisans",
+    "max_amount": "₹50,00,000"
+  },
+  {
+    "id": "zed-certification",
+    "name": "ZED Certification Scheme",
+    "description": "Zero Defect Zero Effect (ZED) model to motivate MSMEs to manufacture quality products with zero environmental effect.",
+    "tags": ["certification", "quality", "environment"],
+    "category": "Manufacturing",
+    "benefits": ["Financial assistance for certification", "Improved competitiveness", "Pollution control support"],
+    "eligibility": ["All MSMEs registered on Udyam portal"],
+    "target": "Manufacturing MSMEs",
+    "max_amount": "₹5,00,000"
+  },
+  {
+    "id": "startup-india-seed-fund",
+    "name": "Startup India Seed Fund",
+    "description": "Financial assistance to startups for proof of concept, prototype development, product trials, and market entry.",
+    "tags": ["startup", "seed", "grant"],
+    "category": "Startups",
+    "benefits": ["Grants up to ₹20 Lakh", "Investment via debt-linked instruments up to ₹50 Lakh"],
+    "eligibility": ["DPIIT recognized startups", "Incorporated less than 2 years ago"],
+    "target": "Early-stage startup founders",
+    "max_amount": "₹50,00,000"
+  },
+  {
+    "id": "treds",
+    "name": "TReDS",
+    "description": "Trade Receivables Discounting System for MSMEs to manage their working capital efficiently.",
+    "tags": ["finance", "receivables", "working-capital"],
+    "category": "Loans",
+    "benefits": ["Faster realization of receivables", "Paperless and online process", "No recourse to MSME"],
+    "eligibility": ["MSMEs with receivables from corporates/government"],
+    "target": "Any MSME supplier to large corporates",
+    "max_amount": "Depends on receivables"
+  },
+  {
+    "id": "sidbi-make-india",
+    "name": "SIDBI Make in India Loan",
+    "description": "Soft Loan Fund for MSMEs (SMILE) to provide quasi-equity and soft loans to MSMEs.",
+    "tags": ["manufacturing", "quasi-equity", "sidbi"],
+    "category": "Loans",
+    "benefits": ["Long repayment tenure", "Competitive interest rates", "Quick disbursement"],
+    "eligibility": ["MSMEs in the manufacturing or select service sectors"],
+    "target": "Expansion and new projects under Make in India",
+    "max_amount": "₹25,00,00,000"
+  },
+  {
+    "id": "digital-msme",
+    "name": "Digital MSME Scheme",
+    "description": "Promoting Information and Communication Technology (ICT) in MSME sector for improved efficiency.",
+    "tags": ["digital", "technology", "it"],
+    "category": "Manufacturing",
+    "benefits": ["Subsidy for cloud services", "E-marketing support", "Digital literacy"],
+    "eligibility": ["Udyam registered MSMEs"],
+    "target": "Businesses looking to digitize",
+    "max_amount": "₹1,00,000"
+  },
+  {
+    "id": "clcss",
+    "name": "Credit Linked Capital Subsidy Scheme",
+    "description": "Facilitating technology upgradation by providing 15% upfront capital subsidy.",
+    "tags": ["subsidy", "technology", "upgradation"],
+    "category": "Subsidies",
+    "benefits": ["15% upfront capital subsidy", "Reduced cost of technology", "Better product quality"],
+    "eligibility": ["MSEs upgrading their technology with well-established technology"],
+    "target": "Manufacturing units",
+    "max_amount": "₹15,00,000"
+  },
+  {
+    "id": "msme-champions",
+    "name": "MSME Champions Scheme",
+    "description": "An umbrella scheme to assist MSMEs through multiple interventions like ZED, LEAN, and Design.",
+    "tags": ["consulting", "design", "lean"],
+    "category": "Grants",
+    "benefits": ["Handholding and mentoring", "Subsidy for specialized consulting", "Design improvement grants"],
+    "eligibility": ["Any registered MSME"],
+    "target": "Aggressive, growth-oriented MSMEs",
+    "max_amount": "Variable"
+  },
+  {
+    "id": "sc-st-hub",
+    "name": "National SC/ST Hub",
+    "description": "Supporting SC/ST entrepreneurs to fulfill the 4% procurement requirement by Central Government.",
+    "tags": ["sc-st", "procurement", "handholding"],
+    "category": "Grants",
+    "benefits": ["Special marketing support", "Training and skill development", "Procurement preference"],
+    "eligibility": ["SC/ST entrepreneurs"],
+    "target": "SC/ST business owners",
+    "max_amount": "Variable"
+  },
+  {
+    "id": "lean-manufacturing",
+    "name": "Lean Manufacturing Competitiveness",
+    "description": "Financial assistance for implementing Lean manufacturing techniques to reduce waste.",
+    "tags": ["lean", "efficiency", "manufacturing"],
+    "category": "Manufacturing",
+    "benefits": ["80% financial support for consultant fees", "Waste reduction", "Increased productivity"],
+    "eligibility": ["MSMEs in clusters or groups"],
+    "target": "Cluster-based manufacturing units",
+    "max_amount": "₹36,00,000 per cluster"
+  },
+  {
+    "id": "cluster-development",
+    "name": "Cluster Development Programme",
+    "description": "Enhancing productivity and competitiveness by creating Common Facility Centres (CFCs).",
+    "tags": ["infrastructure", "cluster", "collaboration"],
+    "category": "Manufacturing",
+    "benefits": ["Grant up to 70-90% for CFCs", "Marketing hubs support", "Common raw material bank"],
+    "eligibility": ["State governments or SPVs of MSMEs"],
+    "target": "Groups of MSMEs in same sector",
+    "max_amount": "₹30,00,00,000"
+  },
+  {
+    "id": "credit-subsidy-women",
+    "name": "Mahila Coir Yojana",
+    "description": "Exclusive training and subsidy scheme for women in the coir industry.",
+    "tags": ["women", "rural", "coir"],
+    "category": "Women Entrepreneurs",
+    "benefits": ["Stipend during training", "75% subsidy on machinery", "Empowerment focused"],
+    "eligibility": ["Women artisans in coir sector"],
+    "target": "Rural women entrepreneurs",
+    "max_amount": "₹1,00,000"
+  },
+  {
+    "id": "asire-scheme",
+    "name": "ASPIRE Scheme",
+    "description": "Scheme for Promotion of Innovation, Rural Industries and Entrepreneurship.",
+    "tags": ["innovation", "rural", "lbi"],
+    "category": "Startups",
+    "benefits": ["Support for Livelihood Business Incubators (LBIs)", "Funding for Technology Business Incubators"],
+    "eligibility": ["Trusts, non-profits, governmental agencies"],
+    "target": "Rural innovators and educators",
+    "max_amount": "₹1,00,00,000"
+  },
+  {
+    "id": "sfurti",
+    "name": "SFURTI",
+    "description": "Scheme of Fund for Regeneration of Traditional Industries.",
+    "tags": ["traditional", "artisans", "handicrafts"],
+    "category": "Grants",
+    "benefits": ["Modernization of clusters", "Skill development for artisans", "Market linkages"],
+    "eligibility": ["Artisans clusters", "NGOs with experience in traditional sectors"],
+    "target": "Traditional sectors like bamboo, honey, khadi",
+    "max_amount": "₹8,00,00,000"
+  },
+  {
+    "id": "credit-flow-support",
+    "name": "Interest Subvention Scheme",
+    "description": "2% interest subvention for incremental credit to MSMEs.",
+    "tags": ["loan", "interest", "subvention"],
+    "category": "Subsidies",
+    "benefits": ["Direct reduction in interest cost", "Support for valid GST registered MSMEs"],
+    "eligibility": ["Udyam and GST registered units"],
+    "target": "Growth-stage MSMEs",
+    "max_amount": "₹1,00,00,000 loan limit"
+  },
+  {
+    "id": "msme-samadhaan",
+    "name": "MSME Samadhaan",
+    "description": "Official portal for MSMEs to file cases for delayed payments from buyers.",
+    "tags": ["legal", "payments", "protection"],
+    "category": "Grants",
+    "benefits": ["Legal backing for payments", "Interest on delayed payments", "Pressure on large buyers"],
+    "eligibility": ["Udyam registered MSEs"],
+    "target": "MSEs facing liquidity crunch due to delays",
+    "max_amount": "N/A"
+  },
+  {
+    "id": "tuf-textiles",
+    "name": "Technology Upgradation Fund Scheme",
+    "description": "Infrastructure and technology support specifically for the textile industry.",
+    "tags": ["textiles", "manufacturing", "upgradation"],
+    "category": "Manufacturing",
+    "benefits": ["Capital Investment Subsidy", "Interest reimbursement", "Support for modern looms"],
+    "eligibility": ["Textile manufacturing units"],
+    "target": "Textile owners",
+    "max_amount": "Variable"
+  }
+]
