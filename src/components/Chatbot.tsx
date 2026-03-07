@@ -2,149 +2,37 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, ArrowRight, Tag } from "lucide-react";
-import schemesData from "@/data/schemes.json";
-import Link from "next/link";
-
-interface Scheme {
-    id: string;
-    name: string;
-    description: string;
-    category: string;
-    tags: string[];
-    max_amount: string;
-    details?: any;
-    eligibility?: string[];
-    benefits?: string[];
-    target?: string;
-}
-
-interface Message {
-    id: number;
-    type: "user" | "bot";
-    text?: string;
-    schemes?: Scheme[];
-}
+import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { useChat } from "ai/react";
 
 const QUICK_ACTIONS = [
-    { label: "📋 All Schemes", query: "show all schemes" },
-    { label: "💰 Loans", query: "loan" },
-    { label: "🏷️ Subsidies", query: "subsidy" },
-    { label: "👩 Women", query: "women" },
-    { label: "🚀 Startups", query: "startup" },
-    { label: "🏭 Manufacturing", query: "manufacturing" },
+    { label: "📋 All Schemes", query: "Can you show me all available schemes?" },
+    { label: "💰 Loans", query: "What loan schemes are available?" },
+    { label: "🏷️ Subsidies", query: "Can you list subsidies offered to MSMEs?" },
+    { label: "👩 Women", query: "What schemes are available for women entrepreneurs?" },
+    { label: "🚀 Startups", query: "Are there any targeted schemes for startups?" },
+    { label: "🏭 Manufacturing", query: "What schemes support the manufacturing sector?" },
 ];
-
-function searchSchemes(query: string): Scheme[] {
-    const q = query.toLowerCase().trim();
-
-    if (!q) return [];
-
-    // "show all" or "all schemes"
-    if (q.includes("all scheme") || q.includes("show all") || q.includes("list all")) {
-        return schemesData.slice(0, 8) as Scheme[];
-    }
-
-    const keywords = q.split(/\s+/).filter((w) => w.length > 2);
-
-    const scored = (schemesData as Scheme[]).map((scheme) => {
-        let score = 0;
-        const haystack = [
-            scheme.name,
-            scheme.description,
-            scheme.category,
-            scheme.target || "",
-            ...(scheme.tags || []),
-            ...(scheme.eligibility || []),
-            ...(scheme.benefits || []),
-        ]
-            .join(" ")
-            .toLowerCase();
-
-        for (const kw of keywords) {
-            if (haystack.includes(kw)) score++;
-            // Boost exact tag match
-            if (scheme.tags?.some((t) => t.toLowerCase() === kw)) score += 2;
-            // Boost category match
-            if (scheme.category.toLowerCase().includes(kw)) score += 2;
-        }
-
-        return { scheme, score };
-    });
-
-    return scored
-        .filter((s) => s.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 6)
-        .map((s) => s.scheme);
-}
-
-function getBotResponse(query: string): Message {
-    const q = query.toLowerCase().trim();
-
-    // Greetings
-    if (/^(hi|hello|hey|hola|namaste|greetings)/i.test(q)) {
-        return {
-            id: Date.now(),
-            type: "bot",
-            text: "Hello! 👋 I'm your MSME Scheme Assistant. Ask me about government schemes, loans, subsidies, or grants for your business. You can also try the quick actions below!",
-        };
-    }
-
-    // Help
-    if (/^(help|what can you do|how to use)/i.test(q)) {
-        return {
-            id: Date.now(),
-            type: "bot",
-            text: "I can help you discover MSME schemes & subsidies! Try asking:\n• \"Show me loan schemes\"\n• \"Subsidies for women entrepreneurs\"\n• \"Startup funding options\"\n• \"Manufacturing grants\"\n• \"What is PMEGP?\"\n\nOr use the quick action buttons above the input!",
-        };
-    }
-
-    // Thanks
-    if (/^(thanks|thank you|thx)/i.test(q)) {
-        return {
-            id: Date.now(),
-            type: "bot",
-            text: "You're welcome! 😊 Feel free to ask anything else about MSME schemes.",
-        };
-    }
-
-    // Search
-    const results = searchSchemes(query);
-
-    if (results.length > 0) {
-        return {
-            id: Date.now(),
-            type: "bot",
-            text: `Found ${results.length} matching scheme${results.length > 1 ? "s" : ""}:`,
-            schemes: results,
-        };
-    }
-
-    return {
-        id: Date.now(),
-        type: "bot",
-        text: "I couldn't find matching schemes for that query. Try keywords like **loan**, **subsidy**, **women**, **startup**, **manufacturing**, **grant**, or **training**. You can also use the quick action buttons!",
-    };
-}
 
 export default function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState<Message[]>([
-        {
-            id: 1,
-            type: "bot",
-            text: "Hi! 👋 I'm your **MSME Scheme Assistant**. Ask me about government schemes, subsidies, loans, or grants for your business!",
-        },
-    ]);
-    const [input, setInput] = useState("");
-    const [isTyping, setIsTyping] = useState(false);
+
+    const { messages, input, handleInputChange, handleSubmit, append, isLoading } = useChat({
+        initialMessages: [
+            {
+                id: "1",
+                role: "assistant",
+                content: "Hi! 👋 I'm your **MSME Scheme Assistant**. Ask me about government schemes, subsidies, loans, or grants for your business!",
+            },
+        ],
+    });
+
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages, isTyping]);
+    }, [messages, isLoading]);
 
     useEffect(() => {
         if (isOpen) {
@@ -152,43 +40,23 @@ export default function Chatbot() {
         }
     }, [isOpen]);
 
-    const handleSend = (text?: string) => {
-        const query = text || input.trim();
-        if (!query) return;
-
-        const userMsg: Message = { id: Date.now(), type: "user", text: query };
-        setMessages((prev) => [...prev, userMsg]);
-        setInput("");
-        setIsTyping(true);
-
-        setTimeout(() => {
-            const botMsg = getBotResponse(query);
-            setMessages((prev) => [...prev, botMsg]);
-            setIsTyping(false);
-        }, 600);
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-        }
+    const handleSendAction = (query: string) => {
+        append({ role: "user", content: query });
     };
 
     const renderText = (text: string) => {
         // Simple bold markdown renderer
         return text.split("\n").map((line, i) => (
-            <span key={i}>
+            <span key={i} className="block min-h-[1rem] my-1">
                 {line.split(/(\*\*.*?\*\*)/g).map((part, j) =>
                     part.startsWith("**") && part.endsWith("**") ? (
-                        <strong key={j} className="font-semibold">
+                        <strong key={j} className="font-semibold text-gray-900">
                             {part.slice(2, -2)}
                         </strong>
                     ) : (
                         <span key={j}>{part}</span>
                     )
                 )}
-                {i < text.split("\n").length - 1 && <br />}
             </span>
         ));
     };
@@ -257,70 +125,32 @@ export default function Chatbot() {
                                     key={msg.id}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className={`flex gap-2.5 ${msg.type === "user" ? "flex-row-reverse" : ""}`}
+                                    className={`flex gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
                                 >
                                     {/* Avatar */}
                                     <div
-                                        className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${msg.type === "bot"
+                                        className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${msg.role !== "user"
                                             ? "bg-primary-100 text-primary-600"
                                             : "bg-gray-800 text-white"
                                             }`}
                                     >
-                                        {msg.type === "bot" ? <Bot size={16} /> : <User size={16} />}
+                                        {msg.role !== "user" ? <Bot size={16} /> : <User size={16} />}
                                     </div>
 
                                     {/* Content */}
                                     <div
-                                        className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${msg.type === "user"
+                                        className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${msg.role === "user"
                                             ? "bg-primary-600 text-white rounded-br-md"
                                             : "bg-white text-gray-700 border border-gray-100 shadow-sm rounded-bl-md"
                                             }`}
                                     >
-                                        {msg.text && <div>{renderText(msg.text)}</div>}
-
-                                        {/* Scheme cards */}
-                                        {msg.schemes && (
-                                            <div className="mt-3 space-y-2.5">
-                                                {msg.schemes.map((scheme) => (
-                                                    <Link
-                                                        key={scheme.id}
-                                                        href={`/scheme/${scheme.id}`}
-                                                        onClick={() => setIsOpen(false)}
-                                                        className="block group"
-                                                    >
-                                                        <div className="rounded-xl border border-gray-100 bg-gradient-to-br from-gray-50 to-white p-3 transition-all hover:border-primary-200 hover:shadow-md">
-                                                            <div className="flex items-start justify-between gap-2 mb-1.5">
-                                                                <h4 className="text-xs font-bold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2">
-                                                                    {scheme.name}
-                                                                </h4>
-                                                                <ArrowRight
-                                                                    size={14}
-                                                                    className="shrink-0 mt-0.5 text-gray-300 group-hover:text-primary-500 transition-colors"
-                                                                />
-                                                            </div>
-                                                            <p className="text-[11px] text-gray-500 line-clamp-2 mb-2">
-                                                                {scheme.description}
-                                                            </p>
-                                                            <div className="flex items-center justify-between">
-                                                                <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-2 py-0.5 text-[10px] font-medium text-primary-700">
-                                                                    <Tag size={10} />
-                                                                    {scheme.category}
-                                                                </span>
-                                                                <span className="text-[10px] font-bold text-gray-900">
-                                                                    {scheme.max_amount}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        )}
+                                        {msg.content && <div>{renderText(msg.content)}</div>}
                                     </div>
                                 </motion.div>
                             ))}
 
                             {/* Typing indicator */}
-                            {isTyping && (
+                            {isLoading && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -348,7 +178,7 @@ export default function Chatbot() {
                                 {QUICK_ACTIONS.map((action) => (
                                     <button
                                         key={action.label}
-                                        onClick={() => handleSend(action.query)}
+                                        onClick={() => handleSendAction(action.query)}
                                         className="shrink-0 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-[11px] font-medium text-gray-600 transition-all hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700 active:scale-95"
                                     >
                                         {action.label}
@@ -358,20 +188,19 @@ export default function Chatbot() {
                         </div>
 
                         {/* Input */}
-                        <div className="border-t border-gray-100 bg-white px-4 py-3">
+                        <form onSubmit={handleSubmit} className="border-t border-gray-100 bg-white px-4 py-3">
                             <div className="flex items-center gap-2">
                                 <input
                                     ref={inputRef}
                                     type="text"
                                     value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    onKeyDown={handleKeyDown}
+                                    onChange={handleInputChange}
                                     placeholder="Ask about schemes, subsidies..."
                                     className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 outline-none transition-all focus:border-primary-300 focus:bg-white focus:ring-2 focus:ring-primary-100"
                                 />
                                 <button
-                                    onClick={() => handleSend()}
-                                    disabled={!input.trim()}
+                                    type="submit"
+                                    disabled={!input.trim() || isLoading}
                                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600 text-white transition-all hover:bg-primary-700 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                                     aria-label="Send message"
                                 >
@@ -379,9 +208,9 @@ export default function Chatbot() {
                                 </button>
                             </div>
                             <p className="mt-1.5 text-center text-[10px] text-gray-400">
-                                Powered by MSME Navigator • Data from schemes.json
+                                Powered by OpenAI • Data from schemes.json
                             </p>
-                        </div>
+                        </form>
                     </motion.div>
                 )}
             </AnimatePresence>
