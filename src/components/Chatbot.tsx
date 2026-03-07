@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, Sparkles, ArrowRight, Tag } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, ArrowRight, Tag } from "lucide-react";
 import schemesData from "@/data/schemes.json";
 import Link from "next/link";
 
@@ -262,8 +262,8 @@ export default function Chatbot() {
                                     {/* Avatar */}
                                     <div
                                         className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${msg.type === "bot"
-                                                ? "bg-primary-100 text-primary-600"
-                                                : "bg-gray-800 text-white"
+                                            ? "bg-primary-100 text-primary-600"
+                                            : "bg-gray-800 text-white"
                                             }`}
                                     >
                                         {msg.type === "bot" ? <Bot size={16} /> : <User size={16} />}
@@ -272,8 +272,8 @@ export default function Chatbot() {
                                     {/* Content */}
                                     <div
                                         className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${msg.type === "user"
-                                                ? "bg-primary-600 text-white rounded-br-md"
-                                                : "bg-white text-gray-700 border border-gray-100 shadow-sm rounded-bl-md"
+                                            ? "bg-primary-600 text-white rounded-br-md"
+                                            : "bg-white text-gray-700 border border-gray-100 shadow-sm rounded-bl-md"
                                             }`}
                                     >
                                         {msg.text && <div>{renderText(msg.text)}</div>}

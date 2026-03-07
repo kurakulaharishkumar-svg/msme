@@ -27,10 +27,10 @@ export default function CategoryFilter({
                     key={category}
                     onClick={() => onCategoryChange(category)}
                     className={cn(
-                        "whitespace-nowrap rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200",
+                        "whitespace-nowrap rounded-2xl px-6 py-3 text-sm font-bold transition-all duration-300",
                         activeCategory === category
-                            ? "bg-primary-600 text-white shadow-premium"
-                            : "bg-white text-gray-600 border border-gray-100 hover:border-primary-200 hover:bg-primary-50/50"
+                            ? "bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-premium ring-4 ring-primary-500/20 scale-105"
+                            : "bg-white/60 backdrop-blur-md text-gray-600 hover:text-primary-600 border border-white/40 hover:border-primary-200 hover:bg-white hover:shadow-sm"
                     )}
                 >
                     {category}
@@ -39,3 +39,4 @@ export default function CategoryFilter({
         </div>
     );
 }
+

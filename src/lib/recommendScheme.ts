@@ -36,7 +36,7 @@ export interface RecommendationResult {
 export function recommendScheme(data: EligibilityData): RecommendationResult {
     const scoredSchemes = schemesData.map((scheme) => {
         let score = 0;
-        let reasons: string[] = [];
+        const reasons: string[] = [];
 
         // 1. Base Match: Loan Amount
         const maxAmountMatch = scheme.max_amount.replace(/[^0-9]/g, '');
@@ -161,16 +161,12 @@ export interface RecommendationResultMulti {
     disqualifyReasons: string[];
 }
 
-function parseAmount(amountStr: string): number {
-    const cleaned = amountStr.replace(/[^0-9]/g, '');
-    return cleaned ? parseInt(cleaned, 10) : 0;
-}
 
 // --------------------------
 // HARD ELIGIBILITY RULES per scheme (real-world criteria)
 // Returns { eligible, reasons[] }
 // --------------------------
-function checkHardEligibility(schemeId: string, scheme: any, data: EligibilityData): { eligible: boolean; failReasons: string[]; passReasons: string[] } {
+function checkHardEligibility(schemeId: string, scheme: { id: string; name: string; category: string; max_amount: string; details?: { interestRate?: string } }, data: EligibilityData): { eligible: boolean; failReasons: string[]; passReasons: string[] } {
     const failReasons: string[] = [];
     const passReasons: string[] = [];
 
@@ -481,7 +477,7 @@ function checkHardEligibility(schemeId: string, scheme: any, data: EligibilityDa
 // FINANCIAL APPROVAL SCORING
 // Strict calculation based on actual financial data
 // --------------------------
-function calculateApprovalProbability(data: EligibilityData, scheme: any): number {
+function calculateApprovalProbability(data: EligibilityData, scheme: { category: string }): number {
     let score = 0;
     const isLoanScheme = scheme.category === "Loans";
 

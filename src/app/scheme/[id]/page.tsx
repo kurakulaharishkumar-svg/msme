@@ -33,16 +33,7 @@ export default async function SchemeDetailPage({ params }: Params) {
 
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                         <div className="max-w-3xl">
-                            <div className="flex items-center gap-3 mb-4">
-                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    {scheme.category}
-                                </span>
-                                {scheme.tags.slice(0, 2).map((tag) => (
-                                    <span key={tag} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
+
                             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 mb-6">
                                 {scheme.name}
                             </h1>
@@ -119,7 +110,7 @@ export default async function SchemeDetailPage({ params }: Params) {
                             <section className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200">
                                 <h2 className="text-xl font-semibold text-gray-900 mb-6">Scheme Categories & Limits</h2>
                                 <div className="space-y-4">
-                                    {scheme.details.categories.map((cat: any, idx: number) => (
+                                    {scheme.details.categories.map((cat: { name: string; limit: string }, idx: number) => (
                                         <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-50 border border-gray-100">
                                             <span className="font-medium text-gray-800">{cat.name}</span>
                                             <span className="text-gray-600 text-sm mt-1 sm:mt-0 font-medium bg-white px-3 py-1 rounded-md border border-gray-200 shadow-sm">{cat.limit}</span>

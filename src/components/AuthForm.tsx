@@ -39,8 +39,9 @@ export default function AuthForm() {
                 if (error) throw error;
                 setMessage({ type: "success", text: "Check your email for a confirmation link!" });
             }
-        } catch (err: any) {
-            setMessage({ type: "error", text: err.message || "Something went wrong" });
+        } catch (err: unknown) {
+            const error = err as Error;
+            setMessage({ type: "error", text: error.message || "Something went wrong" });
         } finally {
             setLoading(false);
         }
@@ -57,8 +58,9 @@ export default function AuthForm() {
                 },
             });
             if (error) throw error;
-        } catch (err: any) {
-            setMessage({ type: "error", text: err.message || "Google Sign-In failed" });
+        } catch (err: unknown) {
+            const error = err as Error;
+            setMessage({ type: "error", text: error.message || "Google Sign-In failed" });
             setLoading(false);
         }
     };
@@ -184,7 +186,7 @@ export default function AuthForm() {
 
                 {/* Toggle Login / Signup */}
                 <p className="text-center text-sm text-gray-500">
-                    {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+                    {isLogin ? "Don&apos;t have an account?" : "Already have an account?"}{" "}
                     <button
                         onClick={() => {
                             setIsLogin(!isLogin);

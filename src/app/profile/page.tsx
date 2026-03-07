@@ -2,19 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase";
+import { User as SupabaseUser } from "@supabase/supabase-js";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { User, Briefcase, Mail, Shield, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ProfilePage() {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<SupabaseUser | null>(null);
     const supabase = createClient();
 
     useEffect(() => {
         const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            setUser(user);
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user ?? null);
         };
         getUser();
     }, [supabase]);

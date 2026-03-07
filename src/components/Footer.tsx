@@ -19,7 +19,7 @@ export default function Footer() {
                             </span>
                         </Link>
                         <p className="max-w-xs text-sm leading-relaxed text-gray-500 mb-6">
-                            Empowering India's MSMEs with direct access to government schemes, funding, and growth opportunities.
+                            Empowering India&apos;s MSMEs with direct access to government schemes, funding, and growth opportunities.
                             Modern fintech solutions for the backbone of our economy.
                         </p>
                         <div className="flex gap-4">
