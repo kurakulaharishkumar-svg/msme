@@ -6,7 +6,10 @@ import schemesData from '@/data/schemes.json';
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-    const { messages } = await req.json();
+    const { messages, language } = await req.json();
+
+    // Default to English if language is not provided
+    const requestedLanguage = language === 'hi-IN' ? 'Hindi' : language === 'te-IN' ? 'Telugu' : 'English';
 
     const systemPrompt = `
 You are the MSME Scheme Navigator Assistant, an expert advisor for Indian Micro, Small, and Medium Enterprises.
@@ -16,6 +19,9 @@ If the user asks a question that cannot be answered using this data, politely in
 Do not make up any information, interest rates, or maximum amounts.
 When recommending a scheme, always mention its exact name, category, and max_amount.
 Format your responses beautifully using markdown (bullet points, bold text for emphasis).
+
+IMPORTANT LANGUAGE INSTRUCTION:
+You MUST respond entirely in ${requestedLanguage}. Translate your response and all scheme details into ${requestedLanguage} before formatting.
 
 AVAILABLE SCHEMES DATA:
 ${JSON.stringify(schemesData, null, 2)}
