@@ -224,6 +224,7 @@ export default function Chatbot() {
                 recognition.interimResults = true;
                 recognition.lang = langCode;
 
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 recognition.onresult = (event: any) => {
                     let finalTranscript = "";
                     let interimTranscript = "";
@@ -236,14 +237,18 @@ export default function Chatbot() {
                     }
 
                     if (finalTranscript) {
+                        const trimmed = finalTranscript.trim();
                         setInput("");
-                        append({ role: "user", content: finalTranscript.trim() });
+                        if (trimmed) {
+                            append({ role: "user", content: trimmed });
+                        }
                         recognition.stop();
                     } else if (interimTranscript) {
                         setInput(interimTranscript);
                     }
                 };
 
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 recognition.onerror = (event: any) => {
                     console.error("Speech recognition error", event.error);
                     setListeningLang(null);

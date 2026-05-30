@@ -35,8 +35,9 @@ ${JSON.stringify(schemesData, null, 2)}
         });
 
         return result.toDataStreamResponse();
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("OpenAI API Error:", error);
-        return new Response(JSON.stringify({ error: error.message || "Failed to generate response" }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        const errorMessage = error instanceof Error ? error.message : "Failed to generate response";
+        return new Response(JSON.stringify({ error: errorMessage }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 }

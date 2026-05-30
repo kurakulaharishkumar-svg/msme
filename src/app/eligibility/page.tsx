@@ -112,9 +112,9 @@ export default function EligibilityPage() {
             const topResult = multiResults[0];
             setRecommendation(topResult || null);
 
-            // Storing the request in Supabase using the rigorous top recommendation
-            const { error } = await supabase.from('eligibility_requests').insert({
-                user_id: user.id,
+            // Upsert the core business profile for the user
+            const { error: profileError } = await supabase.from('business_profiles').upsert({
+                id: user.id,
                 business_name: businessName,
                 business_type: businessType,
                 years_in_business: parseInt(yearsInBusiness) || 0,
@@ -130,6 +130,19 @@ export default function EligibilityPage() {
                 monthly_emi: parseFloat(monthlyEmi) || 0,
                 credit_score: creditScore,
                 past_loan_default: pastLoanDefault,
+                updated_at: new Date().toISOString()
+            });
+
+            if (profileError) {
+                console.error("Error upserting business profile:", profileError);
+                setSubmitError(profileError.message || "Failed to update business profile.");
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Storing the request in Supabase using the rigorous top recommendation
+            const { error: requestError } = await supabase.from('eligibility_requests').insert({
+                user_id: user.id,
                 planning_expansion: planningExpansion,
                 machinery_upgrade: machineryUpgrade,
                 estimated_investment: parseFloat(estimatedInvestment) || 0,
@@ -139,9 +152,9 @@ export default function EligibilityPage() {
                 recommendation_reason: topResult?.reason || "No valid schemes found."
             });
 
-            if (error) {
-                console.error("Error inserting data:", error);
-                setSubmitError(error.message || "Failed to submit request.");
+            if (requestError) {
+                console.error("Error inserting data:", requestError);
+                setSubmitError(requestError.message || "Failed to submit request.");
             } else {
                 setSubmitSuccess(true);
             }

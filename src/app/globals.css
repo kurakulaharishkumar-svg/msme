@@ -1,38 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-primary-950: #172554;
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+  --color-primary-950: #1e1b4b;
 
-  --color-accent-50: #faf5ff;
-  --color-accent-100: #f3e8ff;
-  --color-accent-200: #e9d5ff;
-  --color-accent-300: #d8b4fe;
-  --color-accent-400: #c084fc;
-  --color-accent-500: #a855f7;
-  --color-accent-600: #9333ea;
-  --color-accent-700: #7e22ce;
-  --color-accent-800: #6b21a8;
-  --color-accent-900: #581c87;
-  --color-accent-950: #3b0764;
+  --color-accent-50: #fdf4ff;
+  --color-accent-100: #fae8ff;
+  --color-accent-200: #f5d0fe;
+  --color-accent-300: #f0abfc;
+  --color-accent-400: #e879f9;
+  --color-accent-500: #d946ef;
+  --color-accent-600: #c026d3;
+  --color-accent-700: #a21caf;
+  --color-accent-800: #86198f;
+  --color-accent-900: #701a75;
+  --color-accent-950: #4a044e;
 
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
 
-  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.5);
-  --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 10px 20px -15px rgba(0, 0, 0, 0.05);
-  --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.4);
+  --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -15px rgba(0, 0, 0, 0.04);
+  --shadow-glass: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+
+  --animate-pulse-slow: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+
+  @keyframes pulse-slow {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(200%);
+    }
+  }
 }
 
 :root {
@@ -48,10 +82,12 @@
 }
 
 body {
-  background-color: #f8fafc;
-  background-image: radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 0.03) 0, transparent 50%),
-    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.03) 0, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0.03) 0, transparent 50%);
+  background-color: #fafafa;
+  background-image:
+    radial-gradient(at 0% 0%, hsla(238, 100%, 75%, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(286, 100%, 75%, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(238, 100%, 75%, 0.04) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(286, 100%, 75%, 0.04) 0px, transparent 50%);
   background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
@@ -61,11 +97,23 @@ body {
 /* Custom utilities for glassmorphism */
 @layer utilities {
   .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-soft;
+    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-soft relative overflow-hidden;
+  }
+
+  .glass::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none rounded-[inherit];
+    box-shadow: var(--shadow-glass);
   }
 
   .glass-dark {
-    @apply bg-primary-950/70 backdrop-blur-xl border border-white/10 shadow-premium;
+    @apply bg-gray-950/80 backdrop-blur-2xl border border-white/5 shadow-premium relative overflow-hidden;
+  }
+
+  .glass-dark::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none rounded-[inherit];
+    box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .text-gradient {

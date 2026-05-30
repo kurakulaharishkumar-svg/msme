@@ -59,7 +59,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#f8fafc] relative selection:bg-primary-200">
+    <main className="min-h-screen bg-transparent relative selection:bg-primary-300 selection:text-white pb-10">
       <Navbar />
 
       <HeroSection />
@@ -171,44 +171,42 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 overflow-hidden relative">
+      <section className="py-32 overflow-hidden relative border-t border-gray-200/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative rounded-[2.5rem] bg-gray-950 overflow-hidden px-6 py-24 sm:px-16 text-center shadow-premium"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative rounded-[3rem] bg-gray-950 overflow-hidden px-6 py-28 sm:px-16 text-center shadow-premium border border-white/10"
           >
             {/* Deep dark gradient with magical lighting */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-950 via-gray-950 to-accent-950 opacity-90"></div>
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-600/20 rounded-full blur-[120px]"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-600/20 rounded-full blur-[120px]"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-950/80 via-gray-950 to-accent-950/90 mix-blend-multiply"></div>
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600/30 rounded-full blur-[130px] animate-pulse-slow"></div>
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-600/30 rounded-full blur-[130px] animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
 
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 mix-blend-overlay"></div>
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
 
             <div className="relative z-10 w-full flex flex-col items-center">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-primary-200 text-sm font-bold tracking-wide mb-8">
-                TAILORED FOR YOU
+              <span className="inline-block px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-primary-200 text-xs font-black tracking-widest uppercase mb-8 shadow-sm">
+                Tailored For You
               </span>
-              <h2 className="mb-6 text-4xl font-extrabold text-white sm:text-6xl tracking-tight max-w-3xl leading-tight">
+              <h2 className="mb-6 text-5xl font-extrabold text-white sm:text-7xl tracking-tight max-w-4xl leading-[1.1]">
                 Ready to take your business to the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-300">next level?</span>
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-300 font-medium leading-relaxed">
+              <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-300 font-medium leading-relaxed">
                 Find the perfect scheme that matches your business needs.
                 Our AI-powered eligibility engine will guide you through the process step-by-step.
               </p>
-              <div className="mt-12 flex justify-center">
+              <div className="mt-14 flex justify-center">
                 <Link href="/eligibility">
-                  <button className="group relative rounded-full bg-white px-12 py-5 text-lg font-black text-gray-900 shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]">
-                    <span className="relative z-10 flex items-center gap-2">
+                  <button className="group relative overflow-hidden rounded-full bg-white px-14 py-6 text-xl font-black text-gray-900 shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_0_80px_rgba(255,255,255,0.4)]">
+                    <span className="relative z-10 flex items-center gap-3">
                       Check Eligibility Now
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1.5" />
                     </span>
                     {/* Shimmer effect inside button */}
-                    <div className="absolute inset-0 rounded-full overflow-hidden">
-                      <div className="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-50 transform skew-x-[-20deg] group-hover:animate-shimmer"></div>
-                    </div>
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary-100/60 to-transparent group-hover:animate-shimmer pointer-events-none"></div>
                   </button>
                 </Link>
               </div>
